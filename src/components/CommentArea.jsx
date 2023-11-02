@@ -42,43 +42,46 @@ const CommentArea = ({ asin }) => {
   // }
 
   useEffect(() => {
-    const boooh = async () => {
-      setIsLoading(true);
+    if (asin !== null) {
+      // oppure   if(asin)
+      const boooh = async () => {
+        setIsLoading(true);
 
-      try {
-        let response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/comments/" + asin,
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNmYmNiNmIzOTczNDAwMTRkNWU4NmMiLCJpYXQiOjE2OTg2NzU4OTQsImV4cCI6MTY5OTg4NTQ5NH0.kW6L_XcK2zdnR5RHli3H2b0nveuREQfImQV6UpF--hk",
-            },
+        try {
+          let response = await fetch(
+            "https://striveschool-api.herokuapp.com/api/comments/" + asin,
+            {
+              headers: {
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNmYmNiNmIzOTczNDAwMTRkNWU4NmMiLCJpYXQiOjE2OTg2NzU4OTQsImV4cCI6MTY5OTg4NTQ5NH0.kW6L_XcK2zdnR5RHli3H2b0nveuREQfImQV6UpF--hk",
+              },
+            }
+          );
+          console.log(response);
+          if (response.ok) {
+            let comments = await response.json();
+            setComments(comments);
+            setIsLoading(false);
+            setIsError(false);
+            // this.setState({
+            //   comments: comments,
+            //   isLoading: false,
+            //   isError: false,
+            // });
+          } else {
+            // this.setState({ isLoading: false, isError: true });
+            setIsLoading(false);
+            setIsError(true);
           }
-        );
-        console.log(response);
-        if (response.ok) {
-          let comments = await response.json();
-          setComments(comments);
-          setIsLoading(false);
-          setIsError(false);
-          // this.setState({
-          //   comments: comments,
-          //   isLoading: false,
-          //   isError: false,
-          // });
-        } else {
+        } catch (error) {
+          console.log(error);
           // this.setState({ isLoading: false, isError: true });
           setIsLoading(false);
           setIsError(true);
         }
-      } catch (error) {
-        console.log(error);
-        // this.setState({ isLoading: false, isError: true });
-        setIsLoading(false);
-        setIsError(true);
-      }
-    };
-    boooh();
+      };
+      boooh();
+    }
   }, [asin]);
 
   return (
