@@ -22,7 +22,7 @@ const BookList = ({ books }) => {
   return (
     <>
       <Row>
-        <Col md={8}>
+        <Col xs={12} sm={5} md={7} lg={8} xl={9}>
           <Row className="justify-content-center mt-5">
             <Col xs={12} md={4} className="text-center">
               <Form.Group>
@@ -39,7 +39,7 @@ const BookList = ({ books }) => {
             {books
               .filter((b) => b.title.toLowerCase().includes(searchQuery))
               .map((b) => (
-                <Col xs={12} md={4} key={b.asin}>
+                <Col xs={12} md={6} lg={4} xl={3} key={b.asin}>
                   <SingleBook
                     book={b}
                     selectedBook={selectedBook}
@@ -49,7 +49,7 @@ const BookList = ({ books }) => {
               ))}
           </Row>
         </Col>
-        <Col md={4}>
+        <Col xs={8} sm={7} md={5} lg={4} xl={3}>
           <CommentArea asin={selectedBook} />
         </Col>
       </Row>
